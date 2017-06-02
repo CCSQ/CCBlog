@@ -1,6 +1,6 @@
 # ccblog
 
-> a blog for myself
+> 一个基于Vue的博客
 
 ## Build Setup
 
@@ -8,14 +8,14 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+# 启动服务端（优先）
+npm run dev-server
 
-# build for production with minification
-npm run build
+# 启动客户端
+npm run dev-client
 
-# build for production and view the bundle analyzer report
-npm run build --report
+# 启动后台
+npm run dev-admin
+
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
