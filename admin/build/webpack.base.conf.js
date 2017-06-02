@@ -1,0 +1,69 @@
+var path = require('path')
+var utils = require('./utils')
+var config = require('../config')
+var vueLoaderConfig = require('./vue-loader.conf')
+var webpack = require('webpack')
+
+function resolve (dir) {
+	return path.join(__dirname, '..', dir)
+}
+
+module.exports = {
+	entry: {
+		app: './admin/src/main.js'
+	},
+	output: {
+		path: config.build.assetsRoot,
+		filename: '[name].js',
+		publicPath: process.env.NODE_ENV === 'production'
+			? config.build.assetsPublicPath
+			: config.dev.assetsPublicPath
+	},
+	resolve: {
+		extensions: ['.js', '.vue', '.json'],
+		alias: {
+			'vue$': 'vue/dist/vue.esm.js',
+			'@': resolve('src'),
+			'foundation': resolve('src/foundation5'),
+		}
+	},
+	module: {
+		rules: [
+			{
+				test: /\.vue$/,
+				loader: 'vue-loader',
+				options: vueLoaderConfig
+			},
+			{
+				test: /\.js$/,
+				loader: 'babel-loader',
+				include: [resolve('src'), resolve('test')]
+			},
+			{
+				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+				loader: 'url-loader',
+				query: {
+					limit: 10000,
+					name: utils.assetsPath('img/[name].[hash:7].[ext]')
+				}
+			},
+			{
+				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+				loader: 'url-loader',
+				query: {
+					limit: 10000,
+					name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+				}
+			}
+		]
+	},
+	//添加我们的插件 会自动生成一个html文件
+	plugins: [
+	// 	// 加入jQuery 全局变量插入到所有的代码
+		new webpack.optimize.CommonsChunkPlugin('common.js'),
+		new webpack.ProvidePlugin({
+			jQuery: "jquery",
+			$: "jquery"
+		}),
+	],
+}
